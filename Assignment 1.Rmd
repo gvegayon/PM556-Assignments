@@ -3,26 +3,42 @@ title: "Assignment 1"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+Objective: Determine whether daily concentrations of PM2.5 have decreased in CA over the last 15 years (2004-2019)
+
+1. Read in the data using data.table(). For each of the two data sets, check the dimensions, headers, footers, variable names and variable types. Check for any data issues, particularly in the key variable we are analyzing. Summarize findings.
+```{r}
+library(data.table)
+library(tidyverse)
+
+PM_2004 <- data.table::fread("ad_viz_plotval_data_2004.xls")
+#check dimensions 
+dim(PM_2004)
+nrow(PM_2004)
+ncol(PM_2004)
+#check top and bottom of data set
+head(PM_2004)
+tail(PM_2004)
+#check variables 
+str(PM_2004)
+#check key variable
+summary(PM_2004$`Daily Mean PM2.5 Concentration`)
+mean(is.na(PM_2004$`Daily Mean PM2.5 Concentration`))
 ```
+No missing values
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+PM_2019 <- data.table::fread("ad_viz_plotval_data_2019.xls")
+#check dimensions 
+dim(PM_2019)
+nrow(PM_2019)
+ncol(PM_2019)
+#check top and bottom of data set
+head(PM_2019)
+tail(PM_2019)
+#check variables 
+str(PM_2019)
+#check key variable
+summary(PM_2019$`Daily Mean PM2.5 Concentration`)
+mean(is.na(PM_2019$`Daily Mean PM2.5 Concentration`))
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+No missing values.
