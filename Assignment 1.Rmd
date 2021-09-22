@@ -74,7 +74,29 @@ leaflet() %>%
 
 4. Check for any missing or implausible values of PM25 in the combined dataset. Explore the proportions of each and provide a summary of any temporal patterns you see in these observations.
 ```{r}
-
+#check dimensions 
+dim(PM_combined)
+nrow(PM_combined)
+ncol(PM_combined)
+#check top and bottom of data set
+head(PM_combined)
+tail(PM_combined)
+#check variables 
+str(PM_combined)
+#check key variable
+summary(PM_combined$`Daily Mean PM2.5 Concentration`)
+summary(PM_combined$`DAILY_AQI_VALUE`)
+summary(PM_combined$`DAILY_OBS_COUNT`)
+#check Na's
+mean(is.na(PM_combined$`Daily Mean PM2.5 Concentration`))
+mean(is.na(PM_combined$`Year`))
+mean(is.na(PM_combined$`Date`))
+mean(is.na(PM_combined$`Site ID`))
+mean(is.na(PM_combined$`POC`))
+mean(is.na(PM_combined$`DAILY_AQI_VALUE`))
+mean(is.na(PM_combined$`Site Name`))
+mean(is.na(PM_combined$`DAILY_OBS_COUNT`))
+mean(is.na(PM_combined$`AQS_PARAMETER_CODE`))
 ```
 
 5. Explore the main question of interest at three different spatial levels. Create exploratory plots (e.g. boxplots, histograms, line plots) and summary statistics that best suit each level of data. Be sure to write up explanations of what you observe in these data.
