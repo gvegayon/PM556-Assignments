@@ -1,6 +1,9 @@
 ---
 title: "Assignment 1"
-output: html_document
+output:
+  - github_document
+  - html_document
+always_allow_html: true
 ---
 
 Objective: Determine whether daily concentrations of PM2.5 have decreased in CA over the last 15 years (2004-2019)
@@ -97,10 +100,52 @@ mean(is.na(PM_combined$`DAILY_AQI_VALUE`))
 mean(is.na(PM_combined$`Site Name`))
 mean(is.na(PM_combined$`DAILY_OBS_COUNT`))
 mean(is.na(PM_combined$`AQS_PARAMETER_CODE`))
+#Remove implausible values
+PM_combined_filtered <- PM_combined[`Daily Mean PM2.5 Concentration` >= 0,]
+summary(PM_combined_filtered$`Daily Mean PM2.5 Concentration`)
 ```
 
-5. Explore the main question of interest at three different spatial levels. Create exploratory plots (e.g. boxplots, histograms, line plots) and summary statistics that best suit each level of data. Be sure to write up explanations of what you observe in these data.
+5. Explore the main question of interest at three different spatial levels. Create exploratory plots (e.g. boxplots, histograms, line plots) and summary statistics that best suit each level of data (state, county, LA). Be sure to write up explanations of what you observe in these data.
 ```{r}
+library(ggplot2)
+
+#State 
+
+ggplot(PM_combined_filtered) +
+  geom_histogram(mapping = aes(x = `Daily Mean PM2.5 Concentration`)) + xlim(c(0,75))
+
+ ggplot(data = PM_combined_filtered) +
+  geom_point(mapping = aes(x = Year, y = `Daily Mean PM2.5 Concentration`, color = Year), position = "jitter")
+ 
+box_plot_crop <- ggplot(data= PM_combined_filtered, aes(x= Year, y=`Daily Mean PM2.5 Concentration`, fill=Year))
+box_plot_crop + geom_boxplot(outlier.shape = NA) + coord_cartesian(ylim=c(0,35))
+
+PM_combined_filtered_2004 <- PM_combined_filtered[Year %like% "2004",]
+PM_combined_filtered_2019 <- PM_combined_filtered[Year %like% "2019",]
+summary(PM_combined_filtered_2004$`Daily Mean PM2.5 Concentration`)
+summary(PM_combined_filtered_2019$`Daily Mean PM2.5 Concentration`)
+
+#County 
+
+PM_combined_filtered_county <- PM_combined_filtered[CBSA_NAME %like% "Los Angeles-Long Beach-Anaheim, CA",]
+box_plot_crop_county <- ggplot(data= PM_combined_filtered_county, aes(x= Year, y=`Daily Mean PM2.5 Concentration`, fill=Year))
+box_plot_crop_county + geom_boxplot(outlier.shape = NA) + coord_cartesian(ylim=c(0,35))
+
+PM_combined_filtered_county_2004 <- PM_combined_filtered_county[Year %like% "2004",]
+PM_combined_filtered_county_2019 <- PM_combined_filtered_county[Year %like% "2019",]
+summary(PM_combined_filtered_county_2004$`Daily Mean PM2.5 Concentration`)
+summary(PM_combined_filtered_county_2019$`Daily Mean PM2.5 Concentration`)
+
+#Los Angeles
+
+PM_combined_filtered_city <- PM_combined_filtered[`Site Name` %like% "Los Angeles-North Main Street",]
+box_plot_crop_city <- ggplot(data= PM_combined_filtered_city, aes(x= Year, y=`Daily Mean PM2.5 Concentration`, fill=Year))
+box_plot_crop_city + geom_boxplot(outlier.shape = NA) + coord_cartesian(ylim=c(0,45))
+
+PM_combined_filtered_city_2004 <- PM_combined_filtered_city[Year %like% "2004",]
+PM_combined_filtered_city_2019 <- PM_combined_filtered_city[Year %like% "2019",]
+summary(PM_combined_filtered_city_2004$`Daily Mean PM2.5 Concentration`)
+summary(PM_combined_filtered_city_2019$`Daily Mean PM2.5 Concentration`)
 
 ```
 
