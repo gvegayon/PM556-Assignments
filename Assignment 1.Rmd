@@ -27,7 +27,6 @@ str(PM_2004)
 summary(PM_2004$`Daily Mean PM2.5 Concentration`)
 mean(is.na(PM_2004$`Daily Mean PM2.5 Concentration`))
 ```
-No missing values
 
 ```{r}
 PM_2019 <- data.table::fread("ad_viz_plotval_data_2019.xls")
@@ -44,7 +43,7 @@ str(PM_2019)
 summary(PM_2019$`Daily Mean PM2.5 Concentration`)
 mean(is.na(PM_2019$`Daily Mean PM2.5 Concentration`))
 ```
-No missing values.
+These are two tables: the 2004 table contain 19,233 rows and 20 columns representing date, site ID, daily mean PM 2.5 concentration, site name, etc.The 2019 table also contains 20 columns, but has more rows of data (53,086). Both tables do not contain NA's.
 
 2. Combine the two years of data into one data frame. Use the Date variable to create a new column for year, which will serve as an identifier. Change the names of the key variables so that they are easier to refer in your code.
 ```{r}
@@ -74,6 +73,7 @@ leaflet() %>%
     opacity = 1, fillOpacity = 1, radius = 10, color = "red"
     )
 ```
+The sites seem to distributed throughout the state between both years.
 
 4. Check for any missing or implausible values of PM25 in the combined dataset. Explore the proportions of each and provide a summary of any temporal patterns you see in these observations.
 ```{r}
@@ -104,6 +104,7 @@ mean(is.na(PM_combined$`AQS_PARAMETER_CODE`))
 PM_combined_filtered <- PM_combined[`Daily Mean PM2.5 Concentration` >= 0,]
 summary(PM_combined_filtered$`Daily Mean PM2.5 Concentration`)
 ```
+There are no NA's in the combined data set, but there is a negative minimum value in the mean PM2.5 concentration which I removed by setting all the values greater than 0 because there a negative concentration is implausible.
 
 5. Explore the main question of interest at three different spatial levels. Create exploratory plots (e.g. boxplots, histograms, line plots) and summary statistics that best suit each level of data (state, county, LA). Be sure to write up explanations of what you observe in these data.
 ```{r}
@@ -148,4 +149,6 @@ summary(PM_combined_filtered_city_2004$`Daily Mean PM2.5 Concentration`)
 summary(PM_combined_filtered_city_2019$`Daily Mean PM2.5 Concentration`)
 
 ```
+The histogram shows that the instances of daily mean PM 2.5 concentration seems to be 0-15 ug/m3 LC. When separating the data between the two years, there is more spread of the data in 2004 than in 2019 with the majoriy of the 2019 values being less than 50 ug/m3 LC whereas the 2004 concentrations range between 0-50 ug/m3 LC. The Boxplots show clearly that the Daily Mean PM2.5 concentrations have decreased in 2019 throughout the state (2004 median= 10.10 ug/m3 LC vs. 2019 avg= 6.5 ug/m3 LC). This decrease was consistent in the county (2004 median= 14.55 ug/m3 LC vs. 2019 avg= 9.4 ug/m3 LC) and in LA city (2004 median= 16.80 ug/m3 LC vs. 2019 avg= 10.80 ug/m3 LC).
 
+Conclusion: The daily concentrations of PM2.5 have decreased in CA over the last 15 years.
