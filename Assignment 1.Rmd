@@ -6,6 +6,11 @@ output:
 always_allow_html: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 Objective: Determine whether daily concentrations of PM2.5 have decreased in CA over the last 15 years (2004-2019)
 
 1. Read in the data using data.table(). For each of the two data sets, check the dimensions, headers, footers, variable names and variable types. Check for any data issues, particularly in the key variable we are analyzing. Summarize findings.
@@ -63,15 +68,15 @@ head(PM_combined)
 library(leaflet)
 leaflet() %>%
   addProviderTiles('CartoDB.Positron') %>%
-   addCircles(
-    data = PM_2019,
-    lat=~SITE_LATITUDE, lng=~SITE_LONGITUDE,
-    opacity = 1, fillOpacity = 1, radius = 10, color = "blue") %>%
-   addCircles(
-    data = PM_2004,
-    lat=~SITE_LATITUDE, lng=~SITE_LONGITUDE,
-    opacity = 1, fillOpacity = 1, radius = 10, color = "red"
-    )
+  addCircles(
+  data = PM_2019,
+  lat=~SITE_LATITUDE, lng=~SITE_LONGITUDE,
+  opacity = 1, fillOpacity = 1, radius = 10, color = "blue") %>%
+  addCircles(
+  data = PM_2004,
+  lat=~SITE_LATITUDE, lng=~SITE_LONGITUDE,
+  opacity = 1, fillOpacity = 1, radius = 10, color = "red"
+)
 ```
 The sites seem to distributed throughout the state between both years.
 
